@@ -1,0 +1,45 @@
+import ImageCard from "@/components/common/ImageCard"
+import { ImageProps } from "@/interfaces"
+import { useState } from "react"
+
+
+const Home: React.FC = () => {
+
+  const [prompt, setPrompt] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [isLoading, setisLoading] = useState<boolean>(false);
+  const [generatedImages, setGeneratedImages] = useState<ImageProps[]>([])
+
+  const handleGenerateImage = async () => {
+    console.log("Generating images...");
+    console.log(process.env.NEXT_PUBLIC_GPT_API_KEY)
+  }
+  return(
+    <div className="flex flex-col items-center min-h-screen bg-gray-100 p-4 mx-auto">
+      <div className="flex flex-col items-center">
+        <h1 className="text-3xl md:text-4xl font-bold mb-2">Image Generation App</h1>
+        <p className="text-sm md:text-lg text-gray-700 mb-4">Generate stunning images based on your prompts</p>
+
+        <div className="w-full max-w-sm md:max-w-md">
+          <input
+           type="text"
+           value={prompt}
+           onChange={(e) => setPrompt(e.target.value)}
+           placeholder="Enter your prompt here..."
+           className="w-full p-3 border rounded-lg mb-4 border-gray-400"
+           />
+
+           <button onClick={handleGenerateImage}
+            className="w-full p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition duration-200 hover:scale-105 cursor-pointer">
+         {/*{isLoading ? "Loading... " : "Genrate Image"}*/}
+
+              Generate Image
+            </button>
+        </div>
+
+        {imageUrl && <ImageCard action={() => setImageUrl(imageUrl)} imageUrl={imageUrl} prompt={prompt}/>}
+      </div>
+    </div>
+  )
+}
+export default Home
